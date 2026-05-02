@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Long Wu (吴龙)</title>
+<meta name="description" content="Long Wu — Personal homepage." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍💻</text></svg>" />
+<style>
+  :root {
+    --bg:        #ffffff;
+    --ink:       #111111;
+    --ink-soft:  #3d3d3d;
+    --muted:     #6b6b6b;
+    --line:      #dcdcd8;
+    --card:      #ffffff;
+    --accent:    #2a6df4;
+    --shadow:    0 1px 0 0 var(--line), 0 16px 32px -20px rgba(0,0,0,.12);
+    --ease:      cubic-bezier(.2, .8, .2, 1);
+    --spring:    cubic-bezier(.34, 1.56, .64, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:       #1f1f22;
+      --ink:      #e8e8e6;
+      --ink-soft: #b0b0ac;
+      --muted:    #7a7a78;
+      --line:     #34343a;
+      --card:     #28282c;
+      --accent:   #6aa5ff;
+      --shadow:   0 1px 0 0 var(--line), 0 16px 32px -20px rgba(0,0,0,.5);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 72px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .8rem;
+  }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in oklab, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+  .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px color-mix(in oklab, #22c55e 25%, transparent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1);   opacity: 1;  }
+    50%      { transform: scale(1.3); opacity: .7; }
+  }
+  .topbar nav { display: flex; gap: 22px; font-size: .92rem; align-items: center; }
+  .topbar nav a {
+    color: var(--ink-soft);
+    position: relative;
+    padding: 4px 0;
+    transition: color .25s var(--ease);
+  }
+  .topbar nav a:hover { color: var(--ink); text-decoration: none; }
+  .topbar nav a:not(.cta)::after {
+    content: "";
+    position: absolute; left: 50%; right: 50%; bottom: -2px;
+    height: 1px; background: var(--ink);
+    transition: left .35s var(--ease), right .35s var(--ease);
+  }
+  .topbar nav a:not(.cta):hover::after { left: 0; right: 0; }
+  .topbar nav a.cta {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    background: var(--card);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease), transform .4s var(--spring);
+  }
+  .topbar nav a.cta:hover {
+    background: var(--ink); color: var(--bg); border-color: var(--ink);
+    transform: translateY(-2px); text-decoration: none;
+  }
+  .topbar nav a.cta:active { transform: translateY(0) scale(.97); }
+  .topbar nav a.cta span:last-child { transition: transform .4s var(--spring); }
+  .topbar nav a.cta:hover span:last-child { transform: translate(2px, -2px); }
+  @media (max-width: 640px) {
+    .topbar nav a:not(.cta) { display: none; }
+  }
+
+  .layout {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 28px 28px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
+  }
+
+  .sidebar { position: sticky; top: 84px; }
+  @media (max-width: 880px) {
+    .sidebar { position: static; text-align: center; }
+  }
+
+  .portrait {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    margin-bottom: 8px;
+    position: relative;
+    --squircle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 250' preserveAspectRatio='none'><path d='M0,20 C0,4 4,0 20,0 L180,0 C196,0 200,4 200,20 L200,230 C200,246 196,250 180,250 L20,250 C4,250 0,246 0,230 Z' fill='black'/></svg>");
+    -webkit-mask-image: var(--squircle);
+            mask-image: var(--squircle);
+    -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+  }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portrait-caption {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: .82rem;
+    margin: 0 0 14px;
+    height: 1.2em;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .35s var(--ease), transform .45s var(--spring);
+    pointer-events: none;
+  }
+  .portrait:hover + .portrait-caption,
+  .portrait:focus-within + .portrait-caption { opacity: 1; transform: translateY(0); }
+  @media (max-width: 880px) {
+    .portrait { max-width: 240px; margin: 0 auto 18px; }
+  }
+
+  .sidebar h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 4px; letter-spacing: -.005em; }
+  .sidebar .role { color: var(--ink-soft); margin: 0 0 16px; font-size: .95rem; }
+
+  .contacts { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+  .contacts a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 4px;
+    color: var(--ink-soft);
+    font-size: .92rem;
+    border-radius: 6px;
+    transition: color .35s var(--ease), padding .45s var(--spring);
+  }
+  .contacts a:hover { color: var(--ink); text-decoration: none; padding-left: 10px; }
+  .contacts a:hover .ext { opacity: 1; transform: translate(2px, -2px); }
+  .contacts a svg {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    transition: transform .5s var(--spring);
+  }
+  .contacts a:hover svg { transform: rotate(-8deg) scale(1.1); }
+  .contacts a .label { flex: 1; }
+  .contacts a .ext {
+    color: var(--muted);
+    font-size: .8rem;
+    opacity: 0;
+    transform: translate(-4px, 2px);
+    transition: opacity .35s var(--ease), transform .45s var(--spring);
+  }
+  @media (max-width: 880px) {
+    .contacts { max-width: 280px; margin: 0 auto; }
+    .contacts a:hover { padding-left: 4px; }
+  }
+
+  main { min-width: 0; }
+  section { margin-bottom: 48px; }
+  section:last-child { margin-bottom: 0; }
+  .sec-head { margin-bottom: 18px; }
+  .sec-head h2 { font-size: 1.15rem; font-weight: 600; margin: 4px 0 6px; letter-spacing: -.005em; }
+  .sec-head .desc { color: var(--ink-soft); margin: 0; font-size: .92rem; }
+
+  .about p { margin: 0 0 12px; color: var(--ink-soft); font-size: 1rem; }
+  .about p b { color: var(--ink); font-weight: 500; }
+  .about p:last-child { margin-bottom: 0; }
+
+  .news .item {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    font-size: .94rem;
+    align-items: baseline;
+  }
+  .news .item:last-child { border-bottom: 1px solid var(--line); }
+  .news .item time {
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .82rem;
+    line-height: 1.5;
+  }
+  .news .item .what { color: var(--ink); }
+  .news .item .what em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  main a:not(.pill) {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size .4s var(--ease);
+    text-decoration: none;
+  }
+  main a:not(.pill):hover { background-size: 100% 1px; text-decoration: none; }
+
+  .scholar-link, .gh-link {
+    display: inline-flex;
+    align-items: baseline;
+    vertical-align: baseline;
+    gap: 0;
+    color: var(--accent);
+    transition: gap .35s var(--ease);
+  }
+  .scholar-link:hover, .gh-link:hover { gap: 4px; }
+  .scholar-link .scholar-ico,
+  .gh-link .gh-ico {
+    width: 14px; height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+    align-self: center;
+    transform: translateY(1px);
+    opacity: 0;
+    max-width: 0;
+    transition: opacity .3s var(--ease), max-width .35s var(--ease), transform .4s var(--spring);
+  }
+  .scholar-link:hover .scholar-ico,
+  .gh-link:hover .gh-ico {
+    opacity: 1;
+    max-width: 14px;
+    transform: translateY(1px) translateX(0);
+  }
+  .scholar-link .arr,
+  .gh-link .arr {
+    display: inline-block;
+    overflow: hidden;
+    opacity: 0;
+    max-width: 0;
+    transform: translateX(-4px);
+    transition: opacity .3s var(--ease), max-width .35s var(--ease), transform .4s var(--spring);
+  }
+  .scholar-link:hover .arr,
+  .gh-link:hover .arr { opacity: 1; max-width: 1em; transform: translateX(0); }
+
+  .gh-link .lbl-wrap {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .gh-link .lbl-default,
+  .gh-link .lbl-hover {
+    display: inline-block;
+    white-space: nowrap;
+    transition: opacity .25s var(--ease), transform .4s var(--spring);
+  }
+  .gh-link .lbl-default { opacity: 1; transform: translateX(0); }
+  .gh-link .lbl-hover {
+    position: absolute; inset: 0;
+    opacity: 0; transform: translateX(-8px);
+  }
+  .gh-link:hover .lbl-default {
+    position: absolute; inset: 0;
+    opacity: 0; transform: translateX(8px);
+  }
+  .gh-link:hover .lbl-hover { position: static; opacity: 1; transform: translateX(0); }
+
+  .cv-list { display: flex; flex-direction: column; }
+  .cv-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .cv-item:last-child { border-bottom: 1px solid var(--line); }
+  .cv-item .when { color: var(--muted); }
+  .cv-item .role { font-weight: 500; font-size: .98rem; }
+  .cv-item .org  { color: var(--ink-soft); margin-top: 2px; font-size: .9rem; }
+  @media (max-width: 560px) {
+    .cv-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  .work-list { display: flex; flex-direction: column; }
+  .work-item {
+    display: grid;
+    grid-template-columns: 120px 40px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: center;
+  }
+  .work-item:last-child { border-bottom: 1px solid var(--line); }
+  .work-item .when { color: var(--muted); }
+  .work-item .logo {
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .work-item .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .work-item .body .role { font-weight: 500; font-size: .98rem; color: var(--ink); }
+  .work-item .body .company { color: var(--ink-soft); margin-top: 2px; font-size: .9rem; }
+  @media (max-width: 560px) {
+    .work-item { grid-template-columns: 40px 1fr; gap: 12px; }
+    .work-item .when { grid-column: 1 / -1; }
+  }
+
+  .oss-list { display: grid; gap: 10px; }
+  .oss-item {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 16px;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    align-items: start;
+    color: inherit;
+    transition: transform .45s var(--spring), box-shadow .35s var(--ease), border-color .3s var(--ease);
+  }
+  .oss-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 1px 0 0 var(--line), 0 22px 40px -20px rgba(0,0,0,.18);
+    border-color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .oss-item .idx {
+    font-weight: 600; font-size: 1rem; color: var(--accent);
+    transform-origin: left center;
+    transition: transform .5s var(--spring);
+  }
+  .oss-item:hover .idx { transform: translateX(2px) scale(1.08); }
+  .oss-item h3 {
+    margin: 0 0 4px;
+    font-size: .96rem; font-weight: 500; line-height: 1.45;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .oss-item .role-tag {
+    font-size: .7rem; font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 12%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  .oss-item .stars {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: .75rem;
+    color: #eab308;
+    font-variant-numeric: tabular-nums;
+    margin-left: 4px;
+  }
+  .oss-item .stars svg { width: 12px; height: 12px; fill: currentColor; }
+  .oss-item .desc-line { color: var(--ink-soft); font-size: .87rem; }
+  .oss-item .links { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  @media (max-width: 560px) {
+    .oss-item { grid-template-columns: 1fr; }
+    .oss-item .links { justify-content: flex-start; }
+  }
+
+  .pill {
+    font-size: .74rem;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    display: inline-flex; align-items: center; gap: 0;
+    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .4s var(--spring), gap .35s var(--ease);
+  }
+  .pill::after {
+    content: "↗";
+    display: inline-block;
+    width: 0; overflow: hidden;
+    opacity: 0;
+    transform: translateX(-2px);
+    transition: width .35s var(--ease), opacity .3s var(--ease), transform .4s var(--spring);
+  }
+  .pill.copy::after { content: "⧉"; }
+  .pill:hover {
+    background: var(--ink); color: var(--bg); border-color: var(--ink);
+    text-decoration: none;
+    transform: translateY(-2px);
+    gap: 4px;
+  }
+  .pill:hover::after { width: .9em; opacity: 1; transform: translateX(0); }
+  .pill:active { transform: translateY(0) scale(.95); }
+
+  .plain-list p { margin: 6px 0; color: var(--ink-soft); font-size: .94rem; }
+  .plain-list p b { color: var(--ink); font-weight: 500; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 22px 28px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    color: var(--muted);
+    font-size: .82rem;
+    margin-top: 32px;
+  }
+  footer .left { display: flex; gap: 14px; flex: 1; min-width: 0; }
+  .marquee {
+    overflow: hidden;
+    max-width: 360px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-track span { padding-right: 48px; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <span>Long Wu</span>
+  </div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#news">News</a>
+    <a href="#education">Education</a>
+    <a href="#work">Experience</a>
+    <a href="#opensource">Open Source</a>
+    <a href="#research">Research</a>
+    <a href="#awards">Awards</a>
+    <a class="cta" href="https://drive.google.com/file/d/1-M6cDvldHzwrtgmi3-qfGKauthxwfqkP/view?usp=sharing" target="_blank" rel="noopener" title="Open my PDF résumé">
+      <span>Résumé</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="portrait">
+      <img src="./img/portrait.jpg" alt="Portrait of Long Wu" />
+    </div>
+    <p class="portrait-caption">Long Wu in San Francisco 🌁 (2025.05)</p>
+
+    <h1>Long Wu (吴龙)</h1>
+    <p class="role">Software Engineer</p>
+
+    <div class="contacts">
+      <a class="email-link" href="#" data-user="xiaobaomylike" data-domain="gmail.com" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <span class="label">xiaobaomylike <span aria-hidden="true">[at]</span> gmail <span aria-hidden="true">[dot]</span> com</span>
+        <span class="ext">↗</span>
+      </a>
+      <a href="https://www.linkedin.com/in/longwu2000/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg>
+        <span class="label">LinkedIn</span>
+        <span class="ext">↗</span>
+      </a>
+      <a href="https://github.com/xiaobao520123" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.5-4-2-6-2m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+        <span class="label">GitHub</span>
+        <span class="ext">↗</span>
+      </a>
+      <a href="https://blog.xbtzone.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="label">Blog</span>
+        <span class="ext">↗</span>
+      </a>
+      <a href="https://drive.google.com/file/d/1-M6cDvldHzwrtgmi3-qfGKauthxwfqkP/view?usp=sharing" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        <span class="label">Résumé (PDF)</span>
+        <span class="ext">↗</span>
+      </a>
+    </div>
+  </aside>
+
+  <main>
+    <section id="about" class="about">
+      <div class="sec-head"><h2>About me</h2></div>
+      <p>
+        Hi, I&rsquo;m <b>Long Wu</b>. I&rsquo;m a <b>Software Engineer</b> at <b>Microsoft</b>.
+        Currently, I&rsquo;m also a <b>Research Intern</b> at <b>UC Merced</b>, advised by <b>Prof. Li</b>. My research is at the
+        intersection of <b>Computer Systems</b>, <b>HPC</b> &amp; <b>Machine Learning</b>.
+      </p>
+      <p>
+        I prefer ideas that are simple, solid and making true impact. I love building things that can solve real problems.
+      </p>
+    </section>
+
+    <section id="news" class="news">
+      <div class="sec-head"><h2>Recent updates</h2></div>
+      <div class="item">
+        <time>2026.05.03</time>
+        <div class="what">Personal page launched.</div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="sec-head"><h2>Education</h2></div>
+      <div class="cv-list">
+        <div class="cv-item">
+          <div class="when mono">2026.03 — Now</div>
+          <div>
+            <div class="role">Research Intern</div>
+            <div class="org">University of California, Merced · advised by Prof. <a class="scholar-link" href="https://scholar.google.com/citations?user=mGfEQ9wAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="scholar-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L1 8l11 6 9-4.91V17h2V8L12 2z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg><span>Dong Li</span><span class="arr" aria-hidden="true">↗</span></a></div>
+          </div>
+        </div>
+        <div class="cv-item">
+          <div class="when mono">2018.08 — 2022.06</div>
+          <div>
+            <div class="role">B.Eng. in Software Engineering</div>
+            <div class="org">School of Information and Software Engineering,<br/>University of Electronic Science and Technology of China (UESTC)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="sec-head">
+        <h2>Work experience</h2>
+        <p class="desc">Companies where I&rsquo;ve worked or interned.</p>
+      </div>
+      <div class="work-list">
+        <div class="work-item">
+          <div class="when mono">2024.03 — Now</div>
+          <div class="logo"><img src="./img/logos/microsoft.svg" alt="Microsoft" /></div>
+          <div class="body">
+            <div class="role">Software Engineer</div>
+            <div class="company">Microsoft · MAI-A Ads Data, Microsoft AI</div>
+          </div>
+        </div>
+        <div class="work-item">
+          <div class="when mono">2021.11 — 2024.02</div>
+          <div class="logo"><img src="./img/logos/tencent.svg" alt="Tencent" /></div>
+          <div class="body">
+            <div class="role">Software Engineer, Backend</div>
+            <div class="company">Tencent · Interactive Entertainment Group (IEG)</div>
+          </div>
+        </div>
+        <div class="work-item">
+          <div class="when mono">2021.01 — 2021.06</div>
+          <div class="logo"><img src="./img/logos/bytedance.svg" alt="ByteDance" /></div>
+          <div class="body">
+            <div class="role">Software Engineer Intern</div>
+            <div class="company">ByteDance · Data-Monetization Technology</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="opensource">
+      <div class="sec-head">
+        <h2>Open-source contributions</h2>
+        <p class="desc">
+          Selected projects I&rsquo;ve authored or contributed to.
+          More on <a class="gh-link" href="https://github.com/xiaobao520123" target="_blank" rel="noopener"><svg class="gh-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.97 3.22 9.18 7.69 10.67.56.1.77-.24.77-.54 0-.27-.01-.97-.02-1.9-3.13.68-3.79-1.51-3.79-1.51-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.28-.5-1.43.11-2.99 0 0 .95-.3 3.1 1.16.9-.25 1.86-.38 2.82-.38.96 0 1.92.13 2.82.38 2.15-1.46 3.1-1.16 3.1-1.16.61 1.56.23 2.71.11 2.99.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.04.76 2.1 0 1.52-.01 2.74-.01 3.11 0 .3.2.66.78.55 4.46-1.49 7.68-5.7 7.68-10.67C23.25 5.48 18.27.5 12 .5z"/></svg><span class="lbl-wrap"><span class="lbl-default">GitHub</span><span class="lbl-hover">xiaobao520123</span></span><span class="arr" aria-hidden="true">↗</span></a>.
+        </p>
+      </div>
+
+      <div class="oss-list">
+        <article class="oss-item" data-repo="vllm-project/vllm">
+          <div class="idx">01</div>
+          <div>
+            <h3>
+              vLLM
+              <span class="role-tag">Contributor</span>
+              <span class="stars" aria-label="GitHub stars">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25l2.39 4.84 5.34.78-3.86 3.77.91 5.32L8 12.45l-4.78 2.51.91-5.32L.27 5.87l5.34-.78L8 .25z"/></svg>
+                <span class="star-count">—</span>
+              </span>
+            </h3>
+            <div class="desc-line">Contributed batched weight prefetching that yields a <b>50%</b> per-step latency decrease and <b>~4%</b> lower TTFT.</div>
+          </div>
+          <div class="links">
+            <a class="pill" href="https://github.com/vllm-project/vllm/pull/41474" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+
+        <article class="oss-item" data-repo="xiaobao520123/openxmla">
+          <div class="idx">02</div>
+          <div>
+            <h3>
+              openxmla
+              <span class="role-tag">Author</span>
+              <span class="stars" aria-label="GitHub stars">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25l2.39 4.84 5.34.78-3.86 3.77.91 5.32L8 12.45l-4.78 2.51.91-5.32L.27 5.87l5.34-.78L8 .25z"/></svg>
+                <span class="star-count">—</span>
+              </span>
+            </h3>
+            <div class="desc-line">High performance data analysis service from an <b>OLAP Cube</b>.</div>
+          </div>
+          <div class="links">
+            <a class="pill" href="https://github.com/xiaobao520123/openxmla" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+
+        <article class="oss-item" data-repo="xiaobao520123/MiniVT_x64">
+          <div class="idx">03</div>
+          <div>
+            <h3>
+              MiniVT
+              <span class="role-tag">Author</span>
+              <span class="stars" aria-label="GitHub stars">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25l2.39 4.84 5.34.78-3.86 3.77.91 5.32L8 12.45l-4.78 2.51.91-5.32L.27 5.87l5.34-.78L8 .25z"/></svg>
+                <span class="star-count">—</span>
+              </span>
+            </h3>
+            <div class="desc-line">A simple showcase of Intel CPU&rsquo;s virtualization technology <b>VT-x</b> on the Windows platform.</div>
+          </div>
+          <div class="links">
+            <a class="pill" href="https://github.com/xiaobao520123/MiniVT_x64" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+
+        <article class="oss-item" data-repo="xiaobao520123/openclaw-os-activity">
+          <div class="idx">04</div>
+          <div>
+            <h3>
+              openclaw-os-activity
+              <span class="role-tag">Author</span>
+              <span class="stars" aria-label="GitHub stars">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25l2.39 4.84 5.34.78-3.86 3.77.91 5.32L8 12.45l-4.78 2.51.91-5.32L.27 5.87l5.34-.78L8 .25z"/></svg>
+                <span class="star-count">—</span>
+              </span>
+            </h3>
+            <div class="desc-line">Enables <b>OpenClaw</b> to read and learn from user activity on the OS to deliver more <b>personalized</b> answers.</div>
+          </div>
+          <div class="links">
+            <a class="pill" href="https://github.com/xiaobao520123/openclaw-os-activity" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="sec-head">
+        <h2>Research</h2>
+        <p class="desc">A selection of recent work.</p>
+      </div>
+    </section>
+
+    <section id="awards" class="plain-list">
+      <div class="sec-head"><h2>Honors &amp; awards</h2></div>
+      <p><b>Honors:</b> <b>The First Prize</b> of National Contest at the 9th China Software Cup (2021).</p>
+    </section>
+  </main>
+</div>
+
+<footer class="mono">
+  <div class="left">
+    <div class="marquee" aria-label="motto">
+      <div class="marquee-track">
+        <span>Computer Science is an art.</span>
+        <span>Computer Science is an art.</span>
+        <span>Computer Science is an art.</span>
+        <span>Computer Science is an art.</span>
+      </div>
+    </div>
+  </div>
+  <div>last update 2026-05-03</div>
+</footer>
+
+<script>
+  document.querySelectorAll(".email-link").forEach((el) => {
+    const u = el.dataset.user, d = el.dataset.domain;
+    if (!u || !d) return;
+    const addr = u + "\u0040" + d;
+    el.setAttribute("href", "mailto:" + addr);
+    const label = el.querySelector(".label");
+    if (label) label.textContent = addr;
+  });
+
+  const formatStars = (n) => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + "k" : String(n);
+  const STAR_TTL = 60 * 60 * 1000;
+
+  document.querySelectorAll(".oss-item[data-repo]").forEach((el) => {
+    const repo = el.dataset.repo;
+    const out = el.querySelector(".star-count");
+    const key = "stars:" + repo;
+
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(key) || "null"); } catch {}
+    if (cached && typeof cached.n === "number") {
+      out.textContent = formatStars(cached.n);
+    }
+    if (cached && Date.now() - cached.t < STAR_TTL) return;
+
+    fetch(`https://api.github.com/repos/${repo}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => {
+        if (d && typeof d.stargazers_count === "number") {
+          out.textContent = formatStars(d.stargazers_count);
+          try { localStorage.setItem(key, JSON.stringify({ n: d.stargazers_count, t: Date.now() })); } catch {}
+        } else if (!cached) {
+          out.textContent = "—";
+        }
+      })
+      .catch(() => { if (!cached) out.textContent = "—"; });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = "translateY(0)";
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll(".cv-item, .news .item, section").forEach((el) => {
+    el.style.opacity = 0;
+    el.style.transform = "translateY(10px)";
+    el.style.transition = "opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1)";
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
