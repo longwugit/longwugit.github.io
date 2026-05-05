@@ -63,7 +63,8 @@
     backdrop-filter: saturate(140%) blur(10px);
     -webkit-backdrop-filter: saturate(140%) blur(10px);
   }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .brand:hover { text-decoration: none; }
   .brand .dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: #22c55e;
@@ -272,7 +273,7 @@
     transition: opacity .3s var(--ease), max-width .35s var(--ease), transform .4s var(--spring);
   }
   .scholar-link:hover .arr,
-  .gh-link:hover .arr { opacity: 1; max-width: 1em; transform: translateX(0); }
+  .gh-link:hover .arr { opacity: 1; max-width: 1em; transform: translate(2px, -2px); }
 
   .gh-link .lbl-wrap {
     position: relative;
@@ -398,25 +399,34 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     color: var(--ink-soft);
-    display: inline-flex; align-items: center; gap: 0;
-    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .4s var(--spring), gap .35s var(--ease);
+    display: inline-flex; align-items: center;
+    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .4s var(--spring);
   }
+  .pill .pill-ico {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    flex-shrink: 0;
+    margin-right: 5px;
+    transition: transform .4s var(--spring);
+  }
+  .pill:hover .pill-ico { transform: translateX(-1px) rotate(-6deg); }
   .pill::after {
     content: "↗";
     display: inline-block;
     width: 0; overflow: hidden;
     opacity: 0;
+    margin-left: 0;
     transform: translateX(-2px);
-    transition: width .35s var(--ease), opacity .3s var(--ease), transform .4s var(--spring);
+    transition: width .35s var(--ease), margin-left .35s var(--ease), opacity .3s var(--ease), transform .4s var(--spring);
   }
   .pill.copy::after { content: "⧉"; }
   .pill:hover {
     background: var(--ink); color: var(--bg); border-color: var(--ink);
     text-decoration: none;
     transform: translateY(-2px);
-    gap: 4px;
   }
-  .pill:hover::after { width: .9em; opacity: 1; transform: translateX(0); }
+  .pill:hover::after { width: .9em; margin-left: 4px; opacity: 1; transform: translate(2px, -2px); }
   .pill:active { transform: translateY(0) scale(.95); }
 
   .plain-list p { margin: 6px 0; color: var(--ink-soft); font-size: .94rem; }
@@ -453,10 +463,10 @@
 <body>
 
 <header class="topbar">
-  <div class="brand">
+  <a class="brand" href="#" aria-label="Back to top">
     <span class="dot"></span>
     <span>Long Wu</span>
-  </div>
+  </a>
   <nav>
     <a href="#about">About</a>
     <a href="#news">News</a>
@@ -528,7 +538,7 @@
       <div class="sec-head"><h2>Recent updates</h2></div>
       <div class="item">
         <time>2026.05.03</time>
-        <div class="what">Personal homepage launched on Github.</div>
+        <div class="what">Personal homepage launched on GitHub.</div>
       </div>
     </section>
 
@@ -609,7 +619,7 @@
             <div class="desc-line">Contributed batched weight prefetching that yields a <b>>50%</b> per-step latency decrease and <b>~4%</b> lower TTFT.</div>
           </div>
           <div class="links">
-            <a class="pill" href="https://github.com/vllm-project/vllm/pull/41474" target="_blank" rel="noopener">Code</a>
+            <a class="pill" href="https://github.com/vllm-project/vllm/pull/41474" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Code</a>
           </div>
         </article>
 
@@ -627,7 +637,7 @@
             <div class="desc-line">High performance data analysis service from an <b>OLAP Cube</b>.</div>
           </div>
           <div class="links">
-            <a class="pill" href="https://github.com/xiaobao520123/openxmla" target="_blank" rel="noopener">Code</a>
+            <a class="pill" href="https://github.com/xiaobao520123/openxmla" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Code</a>
           </div>
         </article>
 
@@ -645,7 +655,7 @@
             <div class="desc-line">A simple showcase of Intel CPU&rsquo;s virtualization technology <b>VT-x</b> on the Windows platform.</div>
           </div>
           <div class="links">
-            <a class="pill" href="https://github.com/xiaobao520123/MiniVT_x64" target="_blank" rel="noopener">Code</a>
+            <a class="pill" href="https://github.com/xiaobao520123/MiniVT_x64" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Code</a>
           </div>
         </article>
 
@@ -663,7 +673,7 @@
             <div class="desc-line">Enables <b>OpenClaw</b> to read and learn from user activity on the OS to deliver more <b>personalized</b> answers.</div>
           </div>
           <div class="links">
-            <a class="pill" href="https://github.com/xiaobao520123/openclaw-os-activity" target="_blank" rel="noopener">Code</a>
+            <a class="pill" href="https://github.com/xiaobao520123/openclaw-os-activity" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Code</a>
           </div>
         </article>
       </div>
@@ -694,7 +704,7 @@
       </div>
     </div>
   </div>
-  <div>last update 2026.05.03</div>
+  <div>last update 2026.05.05</div>
 </footer>
 
 <script>
