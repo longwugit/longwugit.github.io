@@ -387,6 +387,27 @@
   }
   .oss-item .stars svg { width: 12px; height: 12px; fill: currentColor; }
   .oss-item .desc-line { color: var(--ink-soft); font-size: .87rem; }
+  .oss-item .pr-list {
+    grid-column: 2 / -1;
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .oss-item .pr-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    color: var(--ink-soft);
+    font-size: .87rem;
+  }
+  .oss-item .pr-list li > span { min-width: 0; }
+  @media (max-width: 560px) {
+    .oss-item .pr-list li { grid-template-columns: 1fr; }
+  }
   .oss-item .links { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
   @media (max-width: 560px) {
     .oss-item { grid-template-columns: 1fr; }
@@ -616,15 +637,41 @@
                 <span class="star-count">—</span>
               </span>
             </h3>
-            <div class="desc-line">Contributed batched weight prefetching that yields a <b>>50%</b> per-step latency decrease and <b>~4%</b> lower TTFT.</div>
+            <div class="desc-line">A high-throughput, memory-efficient inference and serving engine for LLMs.</div>
           </div>
-          <div class="links">
-            <a class="pill" href="https://github.com/vllm-project/vllm/pull/41474" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>Code</a>
+          <div></div>
+          <ul class="pr-list">
+            <li>
+              <span>Batched weight prefetching that yields a <b>>50%</b> per-step latency decrease and <b>~4%</b> lower TTFT.</span>
+              <a class="pill" href="https://github.com/vllm-project/vllm/pull/41474" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v6"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/></svg>PR #41474</a>
+            </li>
+          </ul>
+        </article>
+
+        <article class="oss-item" data-repo="sgl-project/sglang">
+          <div class="idx">02</div>
+          <div>
+            <h3>
+              SGLang
+              <span class="role-tag">Contributor</span>
+              <span class="stars" aria-label="GitHub stars">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25l2.39 4.84 5.34.78-3.86 3.77.91 5.32L8 12.45l-4.78 2.51.91-5.32L.27 5.87l5.34-.78L8 .25z"/></svg>
+                <span class="star-count">—</span>
+              </span>
+            </h3>
+            <div class="desc-line">A fast serving framework for large language models and vision language models.</div>
           </div>
+          <div></div>
+          <ul class="pr-list">
+            <li>
+              <span>Redesigned the <b>Weight OffloaderV2</b> to support <b>CUDA Graph</b> compilation, delivering <b>>5×</b> increase in token throughputs.</span>
+              <a class="pill" href="https://github.com/sgl-project/sglang/pull/24531" target="_blank" rel="noopener"><svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v6"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/></svg>PR #24531</a>
+            </li>
+          </ul>
         </article>
 
         <article class="oss-item" data-repo="xiaobao520123/openxmla">
-          <div class="idx">02</div>
+          <div class="idx">03</div>
           <div>
             <h3>
               OpenXMLA
@@ -642,7 +689,7 @@
         </article>
 
         <article class="oss-item" data-repo="xiaobao520123/MiniVT_x64">
-          <div class="idx">03</div>
+          <div class="idx">04</div>
           <div>
             <h3>
               MiniVT
@@ -660,7 +707,7 @@
         </article>
 
         <article class="oss-item" data-repo="xiaobao520123/openclaw-os-activity">
-          <div class="idx">04</div>
+          <div class="idx">05</div>
           <div>
             <h3>
               openclaw-os-activity
