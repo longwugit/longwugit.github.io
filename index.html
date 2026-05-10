@@ -407,11 +407,14 @@
   .oss-item .pr-list li > span { min-width: 0; }
   @media (max-width: 560px) {
     .oss-item .pr-list li { grid-template-columns: 1fr; }
+    .oss-item .pr-list li .pill { justify-self: start; }
   }
   .oss-item .links { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
   @media (max-width: 560px) {
     .oss-item { grid-template-columns: 1fr; }
     .oss-item .links { justify-content: flex-start; }
+    .oss-item > div:empty { display: none; }
+    .oss-item .pr-list { grid-column: 1; }
   }
 
   .pill {
@@ -751,7 +754,7 @@
       </div>
     </div>
   </div>
-  <div>last update 2026.05.08</div>
+  <div>last update 2026.05.11</div>
 </footer>
 
 <script>
