@@ -333,6 +333,11 @@
     overflow: hidden;
   }
   .work-item .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .work-item .logo.logo-wide {
+    background: #303034;
+    border-radius: 7px;
+    padding: 4px 3px;
+  }
   .work-item .body .role { font-weight: 500; font-size: .98rem; color: var(--ink); }
   .work-item .body .company { color: var(--ink-soft); margin-top: 2px; font-size: .9rem; }
   @media (max-width: 560px) {
@@ -549,7 +554,7 @@
     <section id="about" class="about">
       <div class="sec-head"><h2>About me</h2></div>
       <p>
-        Hi, I&rsquo;m <b>Long Wu</b>. I&rsquo;m a <b>Software Engineer</b> at <b>Microsoft</b>.
+        Hi, I&rsquo;m <b>Long Wu</b>. I&rsquo;m an <b>AI Infra Engineer</b> at <b>DataCanvas</b>.
         Currently, I&rsquo;m also a <b>Research Intern</b> at <b>UC Merced</b>, advised by <b>Prof. Dong Li</b>. My research interests are
         <b>Computer Systems</b>, <b>HPC</b>, <b>Distributed Computing</b> &amp; <b>Machine Learning</b>.
       </p>
@@ -560,6 +565,10 @@
 
     <section id="news" class="news">
       <div class="sec-head"><h2>Recent updates</h2></div>
+      <div class="item">
+        <time>2026.07.27</time>
+        <div class="what">Joined DataCanvas as an AI Infra developer.</div>
+      </div>
       <div class="item">
         <time>2026.05.03</time>
         <div class="what">Personal homepage launched on GitHub.</div>
@@ -593,7 +602,15 @@
       </div>
       <div class="work-list">
         <div class="work-item">
-          <div class="when mono">2024.03 — Now</div>
+          <div class="when mono">2026.07 — Now</div>
+          <div class="logo logo-wide"><img src="./img/logos/datacanvas.svg" alt="DataCanvas" /></div>
+          <div class="body">
+            <div class="role">High Performance Computing Engineer</div>
+            <div class="company">DataCanvas · Engine and Framework Group</div>
+          </div>
+        </div>
+        <div class="work-item">
+          <div class="when mono">2024.03 — 2026.07</div>
           <div class="logo"><img src="./img/logos/microsoft.svg" alt="Microsoft" /></div>
           <div class="body">
             <div class="role">Software Engineer</div>
@@ -754,7 +771,7 @@
       </div>
     </div>
   </div>
-  <div>last update 2026.05.11</div>
+  <div>last update 2026.07.29</div>
 </footer>
 
 <script>
